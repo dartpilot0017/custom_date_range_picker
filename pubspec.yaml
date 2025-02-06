@@ -1,6 +1,6 @@
 name: custom_date_range_plus
 description: "The Custom Date Range Picker is a highly customizable Flutter widget designed to simplify the process of selecting date ranges within your mobile applications."
-version: 0.0.1
+version: 0.0.2
 homepage: "https://github.com/dartpilot0017/custom_date_range_picker"
 repository: "https://github.com/dartpilot0017/custom_date_range_picker"
 
