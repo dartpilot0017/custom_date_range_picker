@@ -40,7 +40,7 @@ jobs:
       continue-on-error: false 
 
     - name: Build APK
-      run: flutter build apk --split-per-abi --release --target=example/lib/main.dart --build-name $GITHUB_REF_NAME
+      run: flutter build apk --split-per-abi --release --build-name $GITHUB_REF_NAME
 
     - name: Upload APK as artifact
       if: github.event_name == 'pull_request'
