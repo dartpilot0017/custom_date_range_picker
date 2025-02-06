@@ -1,5 +1,9 @@
-# Custom Date Range Plus
+![Version](https://img.shields.io/pub/v/custom_date_range_plus)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Pub Points](https://img.shields.io/pub/points/custom_date_range_plus)
+![Downloads](https://img.shields.io/pub/d/custom_date_range_plus)
 
+# Custom Date Range Plus
 A customizable Flutter widget for selecting date ranges with additional UI elements such as buttons and dropdowns.
 
 ## Features
@@ -103,12 +107,30 @@ DateRangePicker(
 | `dropDownOnChanged` | `ValueChanged<String?>?` | Callback when dropdown value changes |
 
 ### Screenshots
-![WhatsApp Image 2025-02-06 at 12 19 38 PM (1)](https://github.com/user-attachments/assets/02f1b1c9-4ac5-4f1e-8565-9f93a9d198d9)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM](https://github.com/user-attachments/assets/6086a11a-9e14-4b03-8caf-4d3d5852fc50)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (1)](https://github.com/user-attachments/assets/413b5f28-b186-4c1b-9e41-b2c7d7111650)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (2)](https://github.com/user-attachments/assets/52fc1d3f-6b17-4744-a9c2-18581a8aa0bb)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (3)](https://github.com/user-attachments/assets/e3f4ce26-021a-4d1f-b430-2f0a030191d1)
-![WhatsApp Image 2025-02-06 at 12 19 38 PM](https://github.com/user-attachments/assets/7f1a29fb-b956-4b11-b789-7b5d2ecc7390)
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/02f1b1c9-4ac5-4f1e-8565-9f93a9d198d9" alt="Screenshot 1" width="320" height="650" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/6086a11a-9e14-4b03-8caf-4d3d5852fc50" alt="Screenshot 2" width="320" height="650" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/413b5f28-b186-4c1b-9e41-b2c7d7111650" alt="Screenshot 3" width="320" height="650" />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/52fc1d3f-6b17-4744-a9c2-18581a8aa0bb" alt="Screenshot 4" width="320" height="650" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/e3f4ce26-021a-4d1f-b430-2f0a030191d1" alt="Screenshot 5" width="320" height="650" />
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/7f1a29fb-b956-4b11-b789-7b5d2ecc7390" alt="Screenshot 6" width="320" height="650" />
+    </td>
+  </tr>
+</table>
 https://github.com/user-attachments/assets/d7c1b6a0-18e9-4569-90f9-efd5eb007f4c
 
 ## License
