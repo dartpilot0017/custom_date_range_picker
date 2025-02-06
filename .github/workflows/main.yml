@@ -42,7 +42,7 @@ jobs:
       run: flutter pub get
       
     - name: Check formatting
-      run: dart format --set-exit-if-changed
+      run: dart format lib/ --set-exit-if-changed
 
     - name: Run Unit Tests
       run: flutter test
