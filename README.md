@@ -1,4 +1,4 @@
-# Custom Date Range Picker
+# Custom Date Range Plus
 
 A customizable Flutter widget for selecting date ranges with additional UI elements such as buttons and dropdowns.
 
@@ -15,7 +15,7 @@ Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  custom_daterange_picker: latest_version
+  custom_date_range_plus: latest_version
 ```
 
 Then, run:
@@ -26,10 +26,11 @@ flutter pub get
 ## Usage
 ### Import the Package
 ```dart
-import 'package:date_range_picker/date_range_picker.dart';
+import 'package:custom_date_range_plus/custom_date_range_picker.dart';
 ```
 
 ### Example Implementation
+
 ```dart
 DateRangePicker(
   startDate: DateTime.now().subtract(Duration(days: 7)),
@@ -61,20 +62,6 @@ DateRangePicker(
   dropDownOnChanged: (value) => print("Selected Month: \$value"),
 );
 ```
-
-
-![WhatsApp Image 2025-02-06 at 12 19 37 PM](https://github.com/user-attachments/assets/083da3af-961b-4e24-bb65-767db3152343)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (1)](https://github.com/user-attachments/assets/8b233edf-997e-4d95-a439-f467c6487420)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (2)](https://github.com/user-attachments/assets/b0e55be0-0a3f-4e11-a82d-4c743bd5a5ee)
-![WhatsApp Image 2025-02-06 at 12 19 37 PM (3)](https://github.com/user-attachments/assets/95ba93ca-9b4d-460a-a79f-ba1695433e45)
-![WhatsApp Image 2025-02-06 at 12 19 38 PM](https://github.com/user-attachments/assets/70866eeb-ee00-4cf5-a1c0-209577d6422d)
-![WhatsApp Image 2025-02-06 at 12 19 38 PM (1)](https://github.com/user-attachments/assets/eaf6ea99-ea24-4013-9f40-6707a9fdcbd7)
-
-https://github.com/user-attachments/assets/2694b3ff-ad44-4fec-a706-ed7bda47582c
-
-
-
-
 ## Parameters
 ### Date Selection
 | Property | Type | Description |
@@ -114,6 +101,15 @@ https://github.com/user-attachments/assets/2694b3ff-ad44-4fec-a706-ed7bda47582c
 | `dropDownHintText` | `String?` | Hint text for dropdown |
 | `dropDownItems` | `List<String>?` | List of dropdown options |
 | `dropDownOnChanged` | `ValueChanged<String?>?` | Callback when dropdown value changes |
+
+### Screenshots
+![WhatsApp Image 2025-02-06 at 12 19 38 PM (1)](https://github.com/user-attachments/assets/02f1b1c9-4ac5-4f1e-8565-9f93a9d198d9)
+![WhatsApp Image 2025-02-06 at 12 19 37 PM](https://github.com/user-attachments/assets/6086a11a-9e14-4b03-8caf-4d3d5852fc50)
+![WhatsApp Image 2025-02-06 at 12 19 37 PM (1)](https://github.com/user-attachments/assets/413b5f28-b186-4c1b-9e41-b2c7d7111650)
+![WhatsApp Image 2025-02-06 at 12 19 37 PM (2)](https://github.com/user-attachments/assets/52fc1d3f-6b17-4744-a9c2-18581a8aa0bb)
+![WhatsApp Image 2025-02-06 at 12 19 37 PM (3)](https://github.com/user-attachments/assets/e3f4ce26-021a-4d1f-b430-2f0a030191d1)
+![WhatsApp Image 2025-02-06 at 12 19 38 PM](https://github.com/user-attachments/assets/7f1a29fb-b956-4b11-b789-7b5d2ecc7390)
+https://github.com/user-attachments/assets/d7c1b6a0-18e9-4569-90f9-efd5eb007f4c
 
 ## License
 This package is open-source and licensed under the MIT License.
