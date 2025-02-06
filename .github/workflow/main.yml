@@ -1,0 +1,61 @@
+name: Dart Package CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: stable
+
+    - name: Install dependencies
+      run: dart pub get
+
+    - name: Run linter
+      run: dart analyze
+
+    - name: Check formatting
+      run: dart format --set-exit-if-changed .
+
+    - name: Run tests
+      run: dart test
+      continue-on-error: false
+
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') # Publish only for tagged releases
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: stable
+
+    - name: Install dependencies
+      run: dart pub get
+
+    - name: Dry run publish
+      run: dart pub publish --dry-run
+
+    - name: Publish to pub.dev
+      env:
+        PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+      run: echo "$PUB_CREDENTIALS" > ~/.pub-cache/credentials.json && dart pub publish -f
