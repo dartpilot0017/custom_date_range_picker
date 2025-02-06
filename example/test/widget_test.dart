@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
+import 'package:custom_date_range_plus/custom_date_range_picker.dart';
 
 // Dummy definitions for external variables used in DateRangePicker.
 const double size = 1.0;

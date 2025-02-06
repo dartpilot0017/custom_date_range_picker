@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
+import 'package:custom_date_range_plus/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
