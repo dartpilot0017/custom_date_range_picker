@@ -7,7 +7,9 @@ void main() => runApp(const ExampleApp());
 
 const _repository = 'https://github.com/dartpilot0017/custom_date_range_picker';
 const _package = 'https://pub.dev/packages/custom_date_range_plus';
-const _accents = [Color(0xFF315B48), Color(0xFF465AC7), Color(0xFFAA5232)];
+// Keep ARGB values as the shared source for preview colors and copied code.
+// This avoids Color conversion APIs unavailable on the minimum Flutter SDK.
+const _accentArgb = [0xFF315B48, 0xFF465AC7, 0xFFAA5232];
 
 class ExampleApp extends StatefulWidget {
   const ExampleApp({super.key});
@@ -23,7 +25,7 @@ class _ExampleAppState extends State<ExampleApp> {
   ThemeData _theme(Brightness brightness) => ThemeData(
         useMaterial3: true,
         brightness: brightness,
-        colorSchemeSeed: _accents[_accent],
+        colorSchemeSeed: Color(_accentArgb[_accent]),
         scaffoldBackgroundColor: brightness == Brightness.light
             ? const Color(0xFFF6F5F0)
             : const Color(0xFF151B18),
@@ -146,7 +148,7 @@ class _PlaygroundState extends State<Playground> {
     return "import 'package:flutter/material.dart';\n"
         "import 'package:custom_date_range_plus/custom_date_range_plus.dart';\n\n"
         '// Add this colorSchemeSeed to your MaterialApp ThemeData:\n'
-        '// Color(0x${_accents[widget.accent].toARGB32().toRadixString(16).toUpperCase()})\n'
+        '// Color(0x${_accentArgb[widget.accent].toRadixString(16).toUpperCase()})\n'
         '// Place the example below inside your widget or event handler.\n'
         '$usage';
   }
@@ -317,9 +319,10 @@ class _PlaygroundState extends State<Playground> {
         Text('ACCENT', style: Theme.of(context).textTheme.labelSmall),
         const SizedBox(height: 12),
         Wrap(spacing: 8, runSpacing: 8, children: [
-          for (var i = 0; i < _accents.length; i++)
+          for (var i = 0; i < _accentArgb.length; i++)
             ChoiceChip(
-              avatar: CircleAvatar(backgroundColor: _accents[i], radius: 7),
+              avatar: CircleAvatar(
+                  backgroundColor: Color(_accentArgb[i]), radius: 7),
               label: Text(['Forest', 'Indigo', 'Clay'][i]),
               selected: widget.accent == i,
               onSelected: (_) => widget.onAccentChanged(i),
