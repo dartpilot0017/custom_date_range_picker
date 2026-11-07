@@ -1,7 +1,9 @@
-part of 'custom_date_range_picker.dart';
+import 'package:flutter/material.dart';
+
+/// A keyboard-accessible button retained for compatibility.
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? borderColor;
   final Color? backgroundColor;
   final double? borderWidth;
@@ -30,21 +32,29 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-          width: width ?? size * 154,
-          height: height ?? size * 40,
-          margin: margin,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius ?? size * 10),
-            border: Border.all(
-              color: borderColor ?? const Color(0xFFFF7622),
-              width: borderWidth ?? size * 1,
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: TextButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            minimumSize: const Size(48, 48),
+            padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
+            textStyle: textStyle,
+            backgroundColor: backgroundColor,
+            side: BorderSide(
+              color: borderColor ?? Theme.of(context).colorScheme.primary,
+              width: borderWidth ?? 1,
             ),
-            color: backgroundColor ?? Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 10),
+            ),
           ),
-          child: child),
+          child: child,
+        ),
+      ),
     );
   }
 }

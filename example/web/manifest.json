@@ -1,12 +1,12 @@
 {
-    "name": "example",
-    "short_name": "example",
+    "name": "Custom Date Range Plus Playground",
+    "short_name": "Date Range Plus",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#315B48",
+    "theme_color": "#315B48",
+    "description": "Explore a customizable Flutter date range picker.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

@@ -1,4 +1,7 @@
-part of 'custom_date_range_picker.dart';
+import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart' hide DropdownButton;
+
+/// A styled Material dropdown retained for compatibility.
 
 class DropdownButton extends StatefulWidget {
   final String? hintText;
@@ -45,7 +48,6 @@ class DropdownButton extends StatefulWidget {
 }
 
 class _DropdownButtonState extends State<DropdownButton> {
-  bool _isOpen = false;
   String? _selectedValue;
 
   @override
@@ -54,101 +56,54 @@ class _DropdownButtonState extends State<DropdownButton> {
     _selectedValue = widget.value;
   }
 
-  void _toggleDropdown() {
-    setState(() {
-      _isOpen = !_isOpen;
-    });
-  }
-
-  void _selectItem(String value) {
-    setState(() {
-      _selectedValue = value;
-      _isOpen = false;
-    });
-    widget.onChanged?.call(value);
+  @override
+  void didUpdateWidget(covariant DropdownButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) _selectedValue = widget.value;
+    if (!widget.items.contains(_selectedValue)) _selectedValue = null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: _toggleDropdown,
-          child: Container(
-            width: widget.width ?? 154,
-            height: widget.height ?? 40,
-            margin: widget.margin,
-            padding: widget.padding ?? EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-              border: Border.all(
-                color: widget.borderColor ?? const Color(0xFFFF7622),
-                width: widget.borderWidth ?? 1,
-              ),
-              color: widget.backgroundColor ?? Colors.transparent,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    _selectedValue ?? widget.hintText ?? 'Select a value',
-                    style: widget.dropDownTextStyle ??
-                        TextStyle(
-                          color: const Color(0xFF2B3674),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                ),
-                Icon(
-                  _isOpen
-                      ? CupertinoIcons.chevron_up
-                      : CupertinoIcons.chevron_down,
-                  color: const Color(0xFF2B3674),
-                  size: 18,
-                ),
-              ],
-            ),
-          ),
+    return Container(
+      width: widget.width,
+      constraints: BoxConstraints(minHeight: widget.height ?? 48),
+      margin: widget.margin,
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: widget.backgroundColor,
+        borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+        border: Border.all(
+          color: widget.borderColor ?? Theme.of(context).colorScheme.outline,
+          width: widget.borderWidth ?? 1,
         ),
-        if (_isOpen) widget.gap ?? const SizedBox.shrink(),
-        if (_isOpen)
-          Container(
-            width: widget.dropDownListWidth ?? 154,
-            height: widget.dropDownListHeight ?? 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-              border: Border.all(
-                color: widget.borderColor ?? const Color(0xFFFF7622),
-                width: widget.borderWidth ?? 1,
-              ),
-              color: widget.backgroundColor ?? Colors.white,
-            ),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: widget.items.map((item) {
-                return GestureDetector(
-                  onTap: () => _selectItem(item),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    child: Text(
-                      item,
-                      style: widget.dropDownTextStyle ??
-                          TextStyle(
-                            color: const Color(0xFF2B3674),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-      ],
+      ),
+      child: DropdownButtonHideUnderline(
+        child: material.DropdownButton<String>(
+          value: widget.items.contains(_selectedValue) ? _selectedValue : null,
+          isExpanded: true,
+          menuMaxHeight: widget.dropDownListHeight ?? 320,
+          menuWidth: widget.dropDownListWidth,
+          dropdownColor: widget.backgroundColor,
+          focusColor: widget.backgroundColorOnFocus,
+          borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          style:
+              widget.dropDownTextStyle ?? Theme.of(context).textTheme.bodyLarge,
+          hint: Text(widget.hintText ?? 'Select'),
+          items: [
+            for (final item in widget.items)
+              DropdownMenuItem(
+                  value: item,
+                  child: Text(item, overflow: TextOverflow.ellipsis))
+          ],
+          onChanged: widget.onChanged == null
+              ? null
+              : (value) {
+                  setState(() => _selectedValue = value);
+                  widget.onChanged?.call(value);
+                },
+        ),
+      ),
     );
   }
 }

@@ -1,96 +1,83 @@
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:custom_date_range_plus/custom_date_range_picker.dart';
 
-// Dummy definitions for external variables used in DateRangePicker.
-const double size = 1.0;
-const double mediaQueryWidth = 100.0;
+Future<void> show(WidgetTester tester, Finder finder) async {
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
+}
 
+Future<void> tap(WidgetTester tester, Finder finder) async {
+  await show(tester, finder);
+  await tester.tap(finder);
+  await tester.pumpAndSettle();
+}
 
-// Then also, I want you to give me a proper readme.md file that is explaining the package usefulness.
 void main() {
-  testWidgets('DateRangePicker selects start and end dates and calls callbacks',
-      (WidgetTester tester) async {
-    DateTime? selectedStart;
-    DateTime? selectedEnd;
-    DateTimeRange? selectedRange;
+  testWidgets('playground selects a range and opens both presentations',
+      (tester) async {
+    await tester.pumpWidget(const ExampleApp());
+    await tap(tester, find.byKey(const Key('date_10')));
+    await tap(tester, find.byKey(const Key('date_12')));
+    await tap(tester, find.text('Apply range'));
+    expect(tester.widget<Text>(find.byKey(const Key('range_summary'))).data,
+        contains('Nov 12'));
+    await tap(tester, find.text('Dialog'));
+    await tap(tester, find.text('Open dialog'));
+    expect(find.byType(Dialog), findsOneWidget);
+    await tap(tester, find.text('Apply range'));
+    expect(find.byType(Dialog), findsNothing);
+    await tap(tester, find.text('Bottom sheet'));
+    await tap(tester, find.text('Open bottom sheet'));
+    expect(find.byType(BottomSheet), findsOneWidget);
+    await tap(tester, find.text('Apply range'));
+    expect(find.byType(BottomSheet), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
 
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(size: Size(375, 667)),
-        child: MaterialApp(
-          home: Scaffold(
-            body: SizedBox(
-              height: 600, // Ensure it fits on screen
-              child: SingleChildScrollView(
-                // Make scrollable
-                child: DateRangePicker(
-                  onStartDateChanged: (date) {
-                    selectedStart = date;
-                    debugPrint('Start date selected: $selectedStart');
-                  },
-                  onEndDateChanged: (date) {
-                    selectedEnd = date;
-                    debugPrint('End date selected: $selectedEnd');
-                  },
-                  onDateRangeChanged: (range) {
-                    selectedRange = range;
-                    debugPrint('Date range selected: $selectedRange');
-                  },
-                  onFilledPressed:
-                      () {}, // Ensure this function triggers properly
-                  dropDownItems: const [
-                    'January',
-                    'February',
-                    'March',
-                    'April',
-                    'May',
-                    'June',
-                    'July',
-                    'August',
-                    'September',
-                    'October',
-                    'November',
-                    'December'
-                  ],
-                  filledButtonChild: const Text('Done'),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+  testWidgets('settings update preview and clipboard example', (tester) async {
+    String? copied;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied = (call.arguments as Map)['text'] as String;
+        }
+        return null;
+      },
     );
+    addTearDown(() => tester.binding.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, null));
+    await tester.pumpWidget(const ExampleApp());
+    await tap(tester, find.text('Limit selectable dates'));
+    expect(tester.widget<TextButton>(find.byKey(const Key('date_4'))).onPressed,
+        isNull);
+    await tap(tester, find.text('Monday first'));
+    await tap(tester, find.text('Indigo'));
+    await tap(tester, find.byKey(const Key('copy_code')));
+    expect(copied, contains('DateTime.sunday'));
+    expect(copied, contains('minDate: DateTime(2026, 11, 5)'));
+    expect(copied, contains('0xFF465AC7'));
+    await tap(tester, find.text('Built-in action buttons'));
+    await tap(tester, find.byKey(const Key('date_13')));
+    await tap(tester, find.byKey(const Key('date_16')));
+    expect(tester.widget<Text>(find.byKey(const Key('range_summary'))).data,
+        contains('Nov 16'));
+    expect(tester.takeException(), isNull);
+  });
 
-    await tester.pumpAndSettle();
-
-    // Select start date
-    final day15Finder = find.byKey(Key('date_15'));
-    expect(day15Finder, findsOneWidget);
-    await tester.tap(day15Finder);
-    await tester.pumpAndSettle();
-
-    expect(selectedStart, isNotNull);
-
-    // Select end date
-    final day20Finder = find.byKey(Key('date_20'));
-    expect(day20Finder, findsOneWidget);
-    await tester.tap(day20Finder);
-    await tester.pumpAndSettle();
-
-    expect(selectedEnd, isNotNull);
-
-    // Ensure the "Done" button is visible and tap it
-    final doneButtonFinder = find.text('Done');
-    expect(doneButtonFinder, findsOneWidget);
-
-    await tester.ensureVisible(doneButtonFinder); // Ensure it's in view
-    await tester.tap(doneButtonFinder);
-    await tester.pumpAndSettle();
-
-    // Verify date range callback
-    expect(selectedRange, isNotNull);
-    expect(selectedRange!.start.day, equals(selectedStart!.day));
-    expect(selectedRange!.end.day, equals(selectedEnd!.day));
+  testWidgets('mobile layout and dark theme have no overflow', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const ExampleApp());
+    await tap(tester, find.text('Dark appearance'));
+    expect(Theme.of(tester.element(find.byType(Playground))).brightness,
+        Brightness.dark);
+    await tap(tester, find.text('Dialog'));
+    await tap(tester, find.text('Open dialog'));
+    expect(tester.takeException(), isNull);
   });
 }

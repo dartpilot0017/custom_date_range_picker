@@ -1,0 +1,35 @@
+name: Package checks
+on:
+  push:
+  pull_request:
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: minimum
+            version: '3.27.2'
+          - name: stable
+            version: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.version }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib test example/lib example/test
+        if: matrix.name == 'stable'
+      - run: flutter analyze
+      - run: flutter test --coverage
+      - run: flutter pub get
+        working-directory: example
+      - run: flutter analyze
+        working-directory: example
+      - run: flutter test
+        working-directory: example
+      - run: dart pub publish --dry-run
+        if: matrix.name == 'stable'

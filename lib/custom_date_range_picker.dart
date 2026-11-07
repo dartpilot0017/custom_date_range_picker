@@ -1,13 +1,8 @@
-// ignore: unnecessary_library_name
-library custom_date_range_picker;
+/// Customizable, date-only range selection for Flutter Material applications.
+library;
 
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
-part 'responsive_view.dart';
-part 'custom_button.dart';
-part 'action_buttons.dart';
-part 'dropdown_button.dart';
-part 'date_range_picker.dart';
+export 'action_buttons.dart';
+export 'custom_button.dart';
+export 'date_range_picker.dart';
+export 'dropdown_button.dart';
+export 'src/show_custom_date_range_picker.dart';

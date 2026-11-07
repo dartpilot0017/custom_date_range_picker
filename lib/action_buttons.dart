@@ -1,8 +1,12 @@
-part of 'custom_date_range_picker.dart';
+import 'package:flutter/material.dart';
+
+import 'custom_button.dart';
+
+/// Reset and confirm controls for a date range picker.
 
 class ActionButtons extends StatelessWidget {
   final VoidCallback onOutlinePressed;
-  final VoidCallback onFilledPressed;
+  final VoidCallback? onFilledPressed;
   final Color? filledColor;
   final Color? outlinedColor;
   final Color? filledButtonBorderColor;
@@ -54,9 +58,10 @@ class ActionButtons extends StatelessWidget {
           Flexible(
             child: CustomButton(
               key: const Key('outline_button'),
-              height: outlinedButtonHeight ?? 40,
+              height: outlinedButtonHeight,
               width: outlinedButtonWidth,
-              borderColor: outlinedButtonBorderColor ?? const Color(0xFFFF7622),
+              borderColor: outlinedButtonBorderColor ??
+                  Theme.of(context).colorScheme.primary,
               backgroundColor:
                   outlinedButtonBackgroundColor ?? Colors.transparent,
               borderRadius: outlinedButtonBorderRadius ?? 10,
@@ -67,23 +72,29 @@ class ActionButtons extends StatelessWidget {
                       outlinedButtonText ?? 'Reset',
                       style: textStyle ??
                           TextStyle(
-                            color: const Color(0xFFFF7622),
-                            fontSize: size * 16,
+                            color: outlinedColor ??
+                                Theme.of(context).colorScheme.primary,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
                   ),
             ),
           ),
-          SizedBox(width: 8), // Add some spacing between the buttons
+          const SizedBox(width: 8),
           Flexible(
             child: CustomButton(
               key: const Key('filled_button'),
-              height: filledButtonHeight ?? 40,
+              height: filledButtonHeight,
               width: filledButtonWidth,
               borderColor: filledButtonBorderColor ?? Colors.transparent,
-              backgroundColor:
-                  filledButtonBackgroundColor ?? const Color(0xFFFF7622),
+              backgroundColor: onFilledPressed == null
+                  ? Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.12)
+                  : filledButtonBackgroundColor ??
+                      Theme.of(context).colorScheme.primary,
               borderRadius: filledButtonBorderRadius ?? 10,
               onPressed: onFilledPressed,
               child: filledButtonChild ??
@@ -92,8 +103,11 @@ class ActionButtons extends StatelessWidget {
                       filledButtonText ?? 'Done',
                       style: textStyle ??
                           TextStyle(
-                            color: const Color(0xFFFFFFFF),
-                            fontSize: size * 16,
+                            color: onFilledPressed == null
+                                ? Theme.of(context).disabledColor
+                                : filledColor ??
+                                    Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
